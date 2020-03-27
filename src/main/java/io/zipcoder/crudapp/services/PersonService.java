@@ -7,12 +7,9 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class PersonService {
-    private PersonRepository repo;
 
     @Autowired
-    public PersonService(PersonRepository repo){
-        this.repo = repo;
-    }
+    private PersonRepository repo;
 
     public Iterable<Person> index(){
         return repo.findAll();
@@ -28,8 +25,8 @@ public class PersonService {
 
     public Person update(Long id, Person newPersonData){
         Person originalPerson = repo.findOne(id);
-        originalPerson.setFirst_name(newPersonData.getFirst_name());
-        originalPerson.setLast_name(newPersonData.getLast_name());
+        originalPerson.setFirstName(newPersonData.getFirstName());
+        originalPerson.setLastName(newPersonData.getLastName());
         return repo.save(originalPerson);
     }
 

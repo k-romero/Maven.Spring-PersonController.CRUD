@@ -9,28 +9,25 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping
 public class PersonController {
-    private PersonService service;
 
     @Autowired
-    public PersonController(PersonService service){
-        this.service = service;
+    private PersonService service;
+
+
+    @GetMapping("/people/{id}")
+    public ResponseEntity<Person> show(@PathVariable Long id){
+        return new ResponseEntity<>(service.show(id),HttpStatus.OK);
     }
 
     @GetMapping("/people/")
-    public ResponseEntity<Iterable<Person>> getPersonList(){
+    public ResponseEntity<Iterable<Person>>findAll(){
         return new ResponseEntity<>(service.index(), HttpStatus.OK);
     }
 
-    @GetMapping("/people/{id}")
-    public ResponseEntity<Person> getPerson(@PathVariable Long id){
-        return null;
-    }
-
     @PostMapping("/people/")
-    public Person createPerson(@RequestBody Person p){
-        return new Person();
+    public ResponseEntity<Person> create(@RequestBody Person p){
+        return new ResponseEntity<>(service.create(p), HttpStatus.CREATED);
     }
 
     @PutMapping("/people/{id}")
